@@ -1,0 +1,158 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <!-- Создание таблицы Permission с auto-increment id -->
+    <changeSet id="1" author="Ivan Zhendrenko">
+        <createTable tableName="permission">
+            <column name="id" type="serial">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="entity_name" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="access_level" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <!-- Вставка данных в таблицу Permission -->
+    <changeSet id="2" author="Ivan Zhendrenko">
+        <insert tableName="permission">
+            <column name="entity_name" value="USER"/>
+            <column name="access_level" value="ADM"/>
+        </insert>
+        <insert tableName="permission">
+            <column name="entity_name" value="ROLE"/>
+            <column name="access_level" value="ADM"/>
+        </insert>
+        <insert tableName="permission">
+            <column name="entity_name" value="PERMISSION"/>
+            <column name="access_level" value="ADM"/>
+        </insert>
+
+    </changeSet>
+
+    <!-- Создание таблицы Role с auto-increment id -->
+    <changeSet id="3" author="Ivan Zhendrenko">
+        <createTable tableName="role">
+            <column name="id" type="serial">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="name" type="varchar(255)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <!-- Создание таблицы связи между Role и Permission -->
+    <changeSet id="4" author="Ivan Zhendrenko">
+        <createTable tableName="role_permission">
+            <column name="role_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="permission_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <!-- Добавление внешних ключей для role_permission -->
+    <changeSet id="5" author="Ivan Zhendrenko">
+        <addForeignKeyConstraint baseTableName="role_permission"
+                                 baseColumnNames="role_id"
+                                 constraintName="fk_role_permission_role"
+                                 referencedTableName="role"
+                                 referencedColumnNames="id"/>
+        <addForeignKeyConstraint baseTableName="role_permission"
+                                 baseColumnNames="permission_id"
+                                 constraintName="fk_role_permission_permission"
+                                 referencedTableName="permission"
+                                 referencedColumnNames="id"/>
+    </changeSet>
+
+    <!-- Создание таблицы User с auto-increment id -->
+    <changeSet id="6" author="Ivan Zhendrenko">
+        <createTable tableName="app_user">
+            <column name="id" type="serial">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="username" type="varchar(255)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="password" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="email" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <!-- Создание таблицы связи между User и Role -->
+    <changeSet id="7" author="Ivan Zhendrenko">
+        <createTable tableName="user_role">
+            <column name="user_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="role_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <!-- Добавление внешних ключей для user_role -->
+    <changeSet id="8" author="Ivan Zhendrenko">
+        <addForeignKeyConstraint baseTableName="user_role"
+                                 baseColumnNames="user_id"
+                                 constraintName="fk_user_role_user"
+                                 referencedTableName="app_user"
+                                 referencedColumnNames="id"/>
+        <addForeignKeyConstraint baseTableName="user_role"
+                                 baseColumnNames="role_id"
+                                 constraintName="fk_user_role_role"
+                                 referencedTableName="role"
+                                 referencedColumnNames="id"/>
+    </changeSet>
+
+    <!-- Вставка данных для роли admin и прав на все сущности -->
+    <changeSet id="9" author="Ivan Zhendrenko">
+        <insert tableName="role">
+            <column name="name" value="admin"/>
+        </insert>
+        <insert tableName="role_permission">
+            <column name="role_id" value="1"/> <!-- admin roleEntity id -->
+            <column name="permission_id" value="1"/>
+        </insert>
+        <insert tableName="role_permission">
+            <column name="role_id" value="1"/> <!-- admin roleEntity id -->
+            <column name="permission_id" value="2"/>
+        </insert>
+        <insert tableName="role_permission">
+            <column name="role_id" value="1"/> <!-- admin roleEntity id -->
+            <column name="permission_id" value="3"/>
+        </insert>
+
+    </changeSet>
+
+    <!-- Вставка данных для пользователя admin с паролем admin -->
+    <changeSet id="10" author="Ivan Zhendrenko">
+        <insert tableName="app_user">
+            <column name="username" value="admin"/>
+            <column name="password" value="$2a$10$swnOAR2FQzzSZyrtkF0V7OCJMVY1QLPWgZ5nSOuGtrAteqN.yENw6"/>
+            <column name="email" value="mrreic@gmail.com"/>
+        </insert>
+    </changeSet>
+
+    <!-- Связь пользователя admin с ролью admin -->
+    <changeSet id="11" author="admin">
+        <insert tableName="user_role">
+            <column name="user_id" value="1"/> <!-- admin userEntity id -->
+            <column name="role_id" value="1"/> <!-- admin roleEntity id -->
+        </insert>
+    </changeSet>
+
+</databaseChangeLog>
