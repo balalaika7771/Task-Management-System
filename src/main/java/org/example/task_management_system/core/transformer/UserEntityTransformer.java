@@ -3,6 +3,8 @@ package org.example.task_management_system.core.transformer;
 import base.transformer.Transformer;
 import org.example.task_management_system.core.dto.UserDto;
 import org.example.task_management_system.core.entity.UserEntity;
+import org.example.task_management_system.security.transformer.PermissionEntityTransformer;
+import org.example.task_management_system.security.transformer.RoleEntityTransformer;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 

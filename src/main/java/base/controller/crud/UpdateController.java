@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestBody;
  */
 public interface UpdateController<D, E, I> extends BaseController<D, E> {
 
-
   /**
    * Сервис, используемый контроллером
    *

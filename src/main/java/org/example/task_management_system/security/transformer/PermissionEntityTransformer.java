@@ -1,8 +1,8 @@
-package org.example.task_management_system.core.transformer;
+package org.example.task_management_system.security.transformer;
 
 import base.transformer.Transformer;
-import org.example.task_management_system.core.dto.PermissionDto;
-import org.example.task_management_system.core.entity.PermissionEntity;
+import org.example.task_management_system.security.dto.PermissionDto;
+import org.example.task_management_system.security.entity.PermissionEntity;
 import org.mapstruct.Mapper;
 
 import static org.mapstruct.MappingConstants.ComponentModel.SPRING;

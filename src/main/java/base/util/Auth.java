@@ -1,5 +1,6 @@
 package base.util;
 
+import base.abstractions.Identifiable;
 import base.model.JwtAuthentication;
 import lombok.NoArgsConstructor;
 import org.springframework.lang.Nullable;
@@ -38,6 +39,14 @@ public class Auth {
     Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
     if (authentication != null) {
       return authentication.getPrincipal();
+    }
+    return null;
+  }
+
+  public static @Nullable Long getCurrentUserId() {
+    var user = getCurrentUser();
+    if (user != null) {
+      return ((Identifiable<?>) user).getId();
     }
     return null;
   }

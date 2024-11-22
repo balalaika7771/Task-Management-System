@@ -1,14 +1,14 @@
-package org.example.task_management_system.core.service_model;
+package org.example.task_management_system.security.service_model;
 
 import base.repository.JpaSpecificationExecutorRepository;
 import base.service.CrudService;
 import base.transformer.Transformer;
 import java.util.Optional;
 import lombok.AllArgsConstructor;
-import org.example.task_management_system.core.dto.RoleDto;
-import org.example.task_management_system.core.entity.RoleEntity;
-import org.example.task_management_system.core.repository.RoleRepository;
-import org.example.task_management_system.core.transformer.RoleEntityTransformer;
+import org.example.task_management_system.security.dto.RoleDto;
+import org.example.task_management_system.security.entity.RoleEntity;
+import org.example.task_management_system.security.repository.RoleRepository;
+import org.example.task_management_system.security.transformer.RoleEntityTransformer;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

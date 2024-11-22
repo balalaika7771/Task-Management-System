@@ -9,12 +9,12 @@ import java.util.Optional;
 import java.util.Set;
 import lombok.AllArgsConstructor;
 import org.example.task_management_system.core.dto.UserDto;
-import org.example.task_management_system.core.entity.RoleEntity;
 import org.example.task_management_system.core.entity.UserEntity;
 import org.example.task_management_system.core.exception.EntityNotFoundException;
-import org.example.task_management_system.core.repository.RoleRepository;
 import org.example.task_management_system.core.repository.UserRepository;
 import org.example.task_management_system.core.transformer.UserEntityTransformer;
+import org.example.task_management_system.security.entity.RoleEntity;
+import org.example.task_management_system.security.repository.RoleRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

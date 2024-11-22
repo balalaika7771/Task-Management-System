@@ -1,13 +1,13 @@
-package org.example.task_management_system.core.service_model;
+package org.example.task_management_system.security.service_model;
 
 import base.repository.JpaSpecificationExecutorRepository;
 import base.service.CrudService;
 import base.transformer.Transformer;
 import lombok.AllArgsConstructor;
-import org.example.task_management_system.core.dto.PermissionDto;
-import org.example.task_management_system.core.entity.PermissionEntity;
-import org.example.task_management_system.core.repository.PermissionRepository;
-import org.example.task_management_system.core.transformer.PermissionEntityTransformer;
+import org.example.task_management_system.security.dto.PermissionDto;
+import org.example.task_management_system.security.entity.PermissionEntity;
+import org.example.task_management_system.security.repository.PermissionRepository;
+import org.example.task_management_system.security.transformer.PermissionEntityTransformer;
 import org.springframework.stereotype.Service;
 
 

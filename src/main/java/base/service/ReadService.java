@@ -149,6 +149,5 @@ public interface ReadService<D, E, I> extends BaseJpaService<D, E, I> {
   default Page<D> findAllDto(Example<E> example, Pageable pageable) {
     return t().entityToDtoPage(findAll(example, pageable)).map(this::enrichDto);
   }
-
   // endregion
 }

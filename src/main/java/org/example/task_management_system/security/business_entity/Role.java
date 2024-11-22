@@ -1,4 +1,4 @@
-package org.example.task_management_system.core.business_entity;
+package org.example.task_management_system.security.business_entity;
 
 import base.abstractions.Identifiable;
 import jakarta.persistence.MappedSuperclass;

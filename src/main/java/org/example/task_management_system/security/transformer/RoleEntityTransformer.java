@@ -1,8 +1,8 @@
-package org.example.task_management_system.core.transformer;
+package org.example.task_management_system.security.transformer;
 
 import base.transformer.Transformer;
-import org.example.task_management_system.core.dto.RoleDto;
-import org.example.task_management_system.core.entity.RoleEntity;
+import org.example.task_management_system.security.dto.RoleDto;
+import org.example.task_management_system.security.entity.RoleEntity;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 

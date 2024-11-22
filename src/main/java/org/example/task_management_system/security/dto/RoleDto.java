@@ -1,8 +1,7 @@
-package org.example.task_management_system.core.dto;
+package org.example.task_management_system.security.dto;
 
 import base.abstractions.IdentifiableDto;
-import base.constants.entity.AccessLevel;
-import base.constants.entity.EntityName;
+import java.util.Set;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,9 +14,9 @@ import lombok.experimental.Accessors;
 @Getter
 @Setter
 @Accessors(chain = true)
-public class PermissionDto extends IdentifiableDto<PermissionDto> {
+public class RoleDto extends IdentifiableDto<RoleDto> {
 
-  private EntityName entityName;
+  private String name;
 
-  private AccessLevel accessLevel;
+  private Set<PermissionDto> permissions;
 }

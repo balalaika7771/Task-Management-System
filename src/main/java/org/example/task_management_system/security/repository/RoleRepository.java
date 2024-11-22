@@ -1,8 +1,8 @@
-package org.example.task_management_system.core.repository;
+package org.example.task_management_system.security.repository;
 
 import base.repository.JpaSpecificationExecutorRepository;
 import java.util.Optional;
-import org.example.task_management_system.core.entity.RoleEntity;
+import org.example.task_management_system.security.entity.RoleEntity;
 
 
 public interface RoleRepository extends JpaSpecificationExecutorRepository<RoleEntity, Long> {

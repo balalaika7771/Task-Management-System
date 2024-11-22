@@ -1,4 +1,4 @@
-package org.example.task_management_system.core.entity;
+package org.example.task_management_system.security.entity;
 
 import base.abstractions.Identifiable;
 import base.constants.entity.AccessLevel;

@@ -14,6 +14,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.example.task_management_system.core.business_entity.User;
+import org.example.task_management_system.security.entity.RoleEntity;
 
 
 @Entity

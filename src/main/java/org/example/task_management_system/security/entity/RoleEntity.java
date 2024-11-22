@@ -1,4 +1,4 @@
-package org.example.task_management_system.core.entity;
+package org.example.task_management_system.security.entity;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -13,7 +13,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.example.task_management_system.core.business_entity.Role;
+import org.example.task_management_system.security.business_entity.Role;
 
 
 @Entity
