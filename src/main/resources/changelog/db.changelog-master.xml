@@ -8,5 +8,7 @@
 
     <include file="changeSet/2024-11-21-create-user-role-permission-table.xml" relativeToChangelogFile="true"/>
     <include file="changeSet/2024-11-21-insert-user-role.xml" relativeToChangelogFile="true"/>
+    <include file="changeSet/2024-11-22-create-task.xml" relativeToChangelogFile="true"/>
+    <include file="changeSet/2024-11-24-create-comments.xml" relativeToChangelogFile="true"/>
 
 </databaseChangeLog>

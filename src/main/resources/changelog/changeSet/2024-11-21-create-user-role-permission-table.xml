@@ -20,6 +20,7 @@
     </changeSet>
 
     <!-- Вставка данных в таблицу Permission -->
+
     <changeSet id="2" author="Ivan Zhendrenko">
         <insert tableName="permission">
             <column name="entity_name" value="USER"/>
@@ -33,9 +34,7 @@
             <column name="entity_name" value="PERMISSION"/>
             <column name="access_level" value="ADM"/>
         </insert>
-
     </changeSet>
-
     <!-- Создание таблицы Role с auto-increment id -->
     <changeSet id="3" author="Ivan Zhendrenko">
         <createTable tableName="role">

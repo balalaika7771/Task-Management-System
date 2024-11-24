@@ -1,5 +1,7 @@
 package org.example.task_management_system.core.entity;
 
+import jakarta.persistence.AttributeOverride;
+import jakarta.persistence.AttributeOverrides;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -23,16 +25,14 @@ import org.example.task_management_system.security.entity.RoleEntity;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "app_user")
+@AttributeOverrides({
+    @AttributeOverride(name = "username", column = @Column(name = "username", unique = true, nullable = false)),
+    @AttributeOverride(name = "email", column = @Column(name = "email", unique = true, nullable = false))
+})
 public class UserEntity extends User {
-
-  @Column(unique = true, nullable = false)
-  private String username;
 
   @Column(nullable = false)
   private String password;
-
-  @Column(unique = true, nullable = false)
-  private String email;
 
   @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
   @JoinTable(

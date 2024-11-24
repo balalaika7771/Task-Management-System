@@ -27,8 +27,9 @@ public interface CrudVersioningController<D extends Versionable<D>, E extends Ve
    *
    * @return Сервис
    */
-  @Override
-  CrudVersioningService<D, E, I> svc();
+  default CrudVersioningService<D, E, I> svcCrudVersioning() {
+    return (CrudVersioningService<D, E, I>) svc();
+  }
 
   @Operation(summary = "Сохранение",
       description = "Сохранение сущности",
@@ -40,7 +41,7 @@ public interface CrudVersioningController<D extends Versionable<D>, E extends Ve
   @PreAuthorize("hasPermission(#dummy, 'W') or hasPermission(#dummy, 'ADM')")
   @PostMapping("/save")
   default D save(@RequestBody @Valid D dto, @Parameter(hidden = true) E dummy) {
-    return svc().saveDto(dto);
+    return svcCrudVersioning().saveDto(dto);
   }
 
   @Operation(summary = "Сохранение коллекции",
@@ -53,7 +54,7 @@ public interface CrudVersioningController<D extends Versionable<D>, E extends Ve
   @PreAuthorize("hasPermission(#dummy, 'W') or hasPermission(#dummy, 'ADM')")
   @PostMapping("/save-all")
   default List<D> saveAll(@RequestBody @Valid Collection<D> dtos, @Parameter(hidden = true) E dummy) {
-    return svc().saveAllDto(dtos);
+    return svcCrudVersioning().saveAllDto(dtos);
   }
 
   @Operation(summary = "Обновление",
@@ -66,7 +67,7 @@ public interface CrudVersioningController<D extends Versionable<D>, E extends Ve
   @PreAuthorize("hasPermission(#dummy, 'W') or hasPermission(#dummy, 'ADM')")
   @PatchMapping("/update")
   default D update(@RequestBody @Valid D dto, @Parameter(hidden = true) E dummy) {
-    return svc().updateDto(dto, e -> {
+    return svcCrudVersioning().updateDto(dto, e -> {
     });
   }
 
@@ -77,7 +78,7 @@ public interface CrudVersioningController<D extends Versionable<D>, E extends Ve
   @PreAuthorize("hasPermission(#dummy, 'W') or hasPermission(#dummy, 'ADM')")
   @DeleteMapping("/delete-by-id/{id}")
   default D deleteById(@PathVariable I id, @Parameter(hidden = true) E dummy) {
-    return svc().deleteByIdDto(id);
+    return svcCrudVersioning().deleteByIdDto(id);
   }
 
   @Operation(summary = "Удаление",
@@ -87,6 +88,6 @@ public interface CrudVersioningController<D extends Versionable<D>, E extends Ve
   @PreAuthorize("hasPermission(#dummy, 'W') or hasPermission(#dummy, 'ADM')")
   @DeleteMapping("/delete-all-by-id/{ids}")
   default List<D> deleteAllById(@PathVariable @Valid Collection<I> ids, @Parameter(hidden = true) E dummy) {
-    return svc().deleteAllByIdDto(ids);
+    return svcCrudVersioning().deleteAllByIdDto(ids);
   }
 }

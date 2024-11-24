@@ -36,8 +36,9 @@ public interface ReadVersioningController<D extends Versionable<D>, E extends Ve
    *
    * @return Сервис
    */
-  @Override
-  ReadVersioningService<D, E, I> svc();
+  default ReadVersioningService<D, E, I> svcReadVersioning() {
+    return (ReadVersioningService<D, E, I>) svc();
+  }
 
   @Operation(summary = "Поиск",
       description = "Поиск сущности по идентификатору",
@@ -46,7 +47,7 @@ public interface ReadVersioningController<D extends Versionable<D>, E extends Ve
   @PreAuthorize("hasPermission(#dummy, 'R') or hasPermission(#dummy, 'ADM')")
   @GetMapping("/find-by-id/{id}")
   default Optional<D> findById(@PathVariable I id, @Parameter(hidden = true) E dummy) {
-    return svc().findByIdDto(id);
+    return svcReadVersioning().findByIdDto(id);
   }
 
   @Operation(summary = "Поиск",
@@ -56,7 +57,7 @@ public interface ReadVersioningController<D extends Versionable<D>, E extends Ve
   @PreAuthorize("hasPermission(#dummy, 'R') or hasPermission(#dummy, 'ADM')")
   @GetMapping("/find-all-by-id")
   default List<D> findAllById(@RequestParam List<I> ids, @Parameter(hidden = true) E dummy) {
-    return svc().findAllByIdDto(ids);
+    return svcReadVersioning().findAllByIdDto(ids);
   }
 
   @Operation(summary = "Поиск сущностей с поддержкой пагинации",
@@ -72,7 +73,7 @@ public interface ReadVersioningController<D extends Versionable<D>, E extends Ve
   @PreAuthorize("hasPermission(#dummy, 'R') or hasPermission(#dummy, 'ADM')")
   @GetMapping("/find-all")
   default Page<D> findAll(@Parameter(hidden = true) @ParameterObject @PageableDefault Pageable pageable, @Parameter(hidden = true) E dummy) {
-    return svc().findAllDto(pageable);
+    return svcReadVersioning().findAllDto(pageable);
   }
 
   @Operation(summary = "Поиск актуальной версии",
@@ -83,7 +84,7 @@ public interface ReadVersioningController<D extends Versionable<D>, E extends Ve
   @PreAuthorize("hasPermission(#dummy, 'R') or hasPermission(#dummy, 'ADM')")
   @GetMapping("/find-actual-by-branch-id/{branchId}")
   default Optional<D> findActualByBranchId(@PathVariable Long branchId, @Parameter(hidden = true) E dummy) {
-    return svc().findActualByBranchIdDto(branchId);
+    return svcReadVersioning().findActualByBranchIdDto(branchId);
   }
 
   @Operation(summary = "Поиск сущностей по фильтрам",
@@ -129,12 +130,12 @@ public interface ReadVersioningController<D extends Versionable<D>, E extends Ve
     var pattern = compile(patternStr);
     var matcher = pattern.matcher(search + ",");
 
-    var builder = new SpecificationBuilder<E>(svc().searchPathReplacer());
+    var builder = new SpecificationBuilder<E>(svcReadVersioning().searchPathReplacer());
     while (matcher.find())
       builder = builder.with(matcher.group(1), matcher.group(2), matcher.group(3), false, isDistinct);
 
     var spec = builder.build();
 
-    return svc().findAllDto(spec, pageable);
+    return svcReadVersioning().findAllDto(spec, pageable);
   }
 }

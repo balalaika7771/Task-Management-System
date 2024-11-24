@@ -1,7 +1,6 @@
 package base.controller.crud;
 
 import base.controller.abstractions.BaseController;
-import base.service.ReadService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -19,14 +18,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 public interface ReadController<D, E, I> extends BaseController<D, E>, SearchController<D, E, I> {
 
-  /**
-   * Сервис, используемый контроллером
-   *
-   * @return Сервис
-   */
-  @Override
-  ReadService<D, ? extends E, I> svc();
-
   @Operation(summary = "Поиск",
       description = "Поиск сущности по идентификатору",
       parameters = @Parameter(name = "id", description = "Идентификатор сущности", required = true)
@@ -34,7 +25,7 @@ public interface ReadController<D, E, I> extends BaseController<D, E>, SearchCon
   @PreAuthorize("hasPermission(#dummy, 'ALL_R') or hasPermission(#dummy, 'ADM')")
   @GetMapping("/find-by-id/{id}")
   default Optional<D> findById(@PathVariable I id, @Parameter(hidden = true) E dummy) {
-    return svc().findByIdDto(id);
+    return svcRead().findByIdDto(id);
   }
 
   @Operation(summary = "Поиск",
@@ -44,7 +35,7 @@ public interface ReadController<D, E, I> extends BaseController<D, E>, SearchCon
   @PreAuthorize("hasPermission(#dummy, 'ALL_R') or hasPermission(#dummy, 'ADM')")
   @GetMapping("/find-all-by-id")
   default List<D> findAllById(@RequestParam List<I> ids, @Parameter(hidden = true) E dummy) {
-    return svc().findAllByIdDto(ids);
+    return svcRead().findAllByIdDto(ids);
   }
 
   @Operation(summary = "Поиск сущностей с поддержкой пагинации",
@@ -60,6 +51,6 @@ public interface ReadController<D, E, I> extends BaseController<D, E>, SearchCon
   @PreAuthorize("hasPermission(#dummy, 'ALL_R') or hasPermission(#dummy, 'ADM')")
   @GetMapping("/find-all")
   default Page<D> findAll(@Parameter(hidden = true) @ParameterObject @PageableDefault Pageable pageable, @Parameter(hidden = true) E dummy) {
-    return svc().findAllDto(pageable);
+    return svcRead().findAllDto(pageable);
   }
 }

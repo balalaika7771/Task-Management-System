@@ -1,7 +1,7 @@
 package base.controller.crud;
 
 import base.controller.abstractions.BaseController;
-import base.service.CrudService;
+import base.service.UpdateService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import jakarta.validation.Valid;
@@ -22,8 +22,9 @@ public interface UpdateController<D, E, I> extends BaseController<D, E> {
    *
    * @return Сервис
    */
-  @Override
-  CrudService<D, ? extends E, I> svc();
+  default UpdateService<D, ? extends E, I> svcUpdate() {
+    return (UpdateService<D, ? extends E, I>) svc();
+  }
 
   @Operation(summary = "Обновление",
       description = "Обновление сущности",
@@ -35,7 +36,7 @@ public interface UpdateController<D, E, I> extends BaseController<D, E> {
   @PreAuthorize("hasPermission(#dummy, 'ALL_W') or hasPermission(#dummy, 'ADM')")
   @PatchMapping("/update")
   default D update(@RequestBody @Valid D dto, @Parameter(hidden = true) E dummy) {
-    return svc().updateDto(dto, e -> {
+    return svcUpdate().updateDto(dto, e -> {
     });
   }
 }

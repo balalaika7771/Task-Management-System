@@ -1,4 +1,4 @@
-package org.example.task_management_system.open_api.сonfig;
+package org.example.task_management_system.core.config;
 
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.enums.SecuritySchemeType;

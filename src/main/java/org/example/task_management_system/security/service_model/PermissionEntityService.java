@@ -1,7 +1,10 @@
 package org.example.task_management_system.security.service_model;
 
 import base.repository.JpaSpecificationExecutorRepository;
-import base.service.CrudService;
+import base.service.CreateService;
+import base.service.DeleteService;
+import base.service.ReadService;
+import base.service.UpdateService;
 import base.transformer.Transformer;
 import lombok.AllArgsConstructor;
 import org.example.task_management_system.security.dto.PermissionDto;
@@ -13,7 +16,11 @@ import org.springframework.stereotype.Service;
 
 @Service
 @AllArgsConstructor
-public class PermissionEntityService implements CrudService<PermissionDto, PermissionEntity, Long> {
+public class PermissionEntityService implements
+    CreateService<PermissionDto, PermissionEntity, Long>,
+    ReadService<PermissionDto, PermissionEntity, Long>,
+    UpdateService<PermissionDto, PermissionEntity, Long>,
+    DeleteService<PermissionDto, PermissionEntity, Long> {
 
   private PermissionRepository permissionRepository;
 

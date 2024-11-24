@@ -1,6 +1,7 @@
-package org.example.task_management_system.security.entity;
+package org.example.task_management_system.security.business_entity;
 
 
+import base.abstractions.Identifiable;
 import java.util.Collection;
 import java.util.Objects;
 import java.util.Set;
@@ -17,7 +18,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 @AllArgsConstructor
 @Getter
 @Setter
-public class UserForAuth implements UserDetails {
+public class UserForAuth extends Identifiable<UserForAuth> implements UserDetails {
 
   private String username;
 

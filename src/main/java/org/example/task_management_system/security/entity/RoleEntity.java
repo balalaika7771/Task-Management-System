@@ -1,5 +1,7 @@
 package org.example.task_management_system.security.entity;
 
+import jakarta.persistence.AttributeOverride;
+import jakarta.persistence.AttributeOverrides;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -22,10 +24,10 @@ import org.example.task_management_system.security.business_entity.Role;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "role")
+@AttributeOverrides({
+    @AttributeOverride(name = "name", column = @Column(name = "name", nullable = false, unique = true))
+})
 public class RoleEntity extends Role {
-
-  @Column(nullable = false, unique = true)
-  private String name;
 
   @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
   @JoinTable(
@@ -34,6 +36,4 @@ public class RoleEntity extends Role {
       inverseJoinColumns = @JoinColumn(name = "permission_id")
   )
   private Set<PermissionEntity> permissions;
-
 }
-

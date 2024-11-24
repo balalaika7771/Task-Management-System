@@ -32,8 +32,9 @@ public interface SearchController<D, E, I> extends BaseController<D, E> {
    *
    * @return Сервис
    */
-  @Override
-  ReadService<D, ? extends E, I> svc();
+  default ReadService<D, ? extends E, I> svcRead() {
+    return (ReadService<D, ? extends E, I>) svc();
+  }
 
   @SuppressWarnings("unchecked")
   @Operation(summary = "Поиск сущностей по фильтрам",
@@ -75,7 +76,7 @@ public interface SearchController<D, E, I> extends BaseController<D, E> {
                          @RequestParam(value = "isDistinct", required = false, defaultValue = "false") boolean isDistinct,
                          @Parameter(hidden = true) @ParameterObject @PageableDefault Pageable pageable,
                          @Parameter(hidden = true) E dummy) {
-    var spec = search.searchToSpec(svc().searchPathReplacer(), isDistinct);
-    return svc().findAllDto(spec, pageable);
+    var spec = search.searchToSpec(svcRead().searchPathReplacer(), isDistinct);
+    return svcRead().findAllDto(spec, pageable);
   }
 }

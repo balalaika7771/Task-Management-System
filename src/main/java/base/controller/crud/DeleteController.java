@@ -1,7 +1,7 @@
 package base.controller.crud;
 
 import base.controller.abstractions.BaseController;
-import base.service.CrudService;
+import base.service.DeleteService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import java.util.Collection;
@@ -22,8 +22,10 @@ public interface DeleteController<D, E, I> extends BaseController<D, E> {
    *
    * @return Сервис
    */
-  @Override
-  CrudService<D, ? extends E, I> svc();
+
+  default DeleteService<D, ? extends E, I> svcDelete() {
+    return (DeleteService<D, ? extends E, I>) svc();
+  }
 
   @Operation(summary = "Удаление",
       description = "Удаление сущности по идентификатору",
@@ -32,7 +34,7 @@ public interface DeleteController<D, E, I> extends BaseController<D, E> {
   @PreAuthorize("hasPermission(#dummy, 'ALL_W') or hasPermission(#dummy, 'ADM')")
   @DeleteMapping("/delete-by-id/{id}")
   default void deleteById(@PathVariable I id, @Parameter(hidden = true) E dummy) {
-    svc().deleteById(id);
+    svcDelete().deleteById(id);
   }
 
   @Operation(summary = "Удаление",
@@ -42,6 +44,6 @@ public interface DeleteController<D, E, I> extends BaseController<D, E> {
   @PreAuthorize("hasPermission(#dummy, 'ALL_W') or hasPermission(#dummy, 'ADM')")
   @DeleteMapping("/delete-all-by-id/{ids}")
   default void deleteAllById(@PathVariable Collection<I> ids, @Parameter(hidden = true) E dummy) {
-    svc().deleteAllById(ids);
+    svcDelete().deleteAllById(ids);
   }
 }

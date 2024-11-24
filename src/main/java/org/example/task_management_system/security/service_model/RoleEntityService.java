@@ -1,7 +1,10 @@
 package org.example.task_management_system.security.service_model;
 
 import base.repository.JpaSpecificationExecutorRepository;
-import base.service.CrudService;
+import base.service.CreateService;
+import base.service.DeleteService;
+import base.service.ReadService;
+import base.service.UpdateService;
 import base.transformer.Transformer;
 import java.util.Optional;
 import lombok.AllArgsConstructor;
@@ -15,7 +18,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @AllArgsConstructor
-public class RoleEntityService implements CrudService<RoleDto, RoleEntity, Long> {
+public class RoleEntityService implements
+    CreateService<RoleDto, RoleEntity, Long>,
+    ReadService<RoleDto, RoleEntity, Long>,
+    UpdateService<RoleDto, RoleEntity, Long>,
+    DeleteService<RoleDto, RoleEntity, Long> {
 
   private final RoleRepository roleRepository;
 

@@ -1,0 +1,64 @@
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <changeSet id="create-comments-table" author="Ivan Zhendorenko">
+        <!-- Создание таблицы comments -->
+        <createTable tableName="comments">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="task_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="body" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <!-- Добавление внешнего ключа к таблице tasks -->
+        <addForeignKeyConstraint
+                baseTableName="comments"
+                baseColumnNames="task_id"
+                constraintName="fk_comments_task"
+                referencedTableName="tasks"
+                referencedColumnNames="id"/>
+    </changeSet>
+
+    <changeSet id="2" author="Ivan Zhendorenko">
+        <insert tableName="permission">
+            <column name="entity_name" value="COMMENT"/>
+            <column name="access_level" value="OWN_R"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="3" author="Ivan Zhendorenko">
+        <sql>
+            INSERT INTO role_permission (role_id, permission_id)
+            SELECT r.id, p.id
+            FROM role r
+                     JOIN permission p ON p.entity_name = 'COMMENT' AND p.access_level = 'OWN_R'
+            WHERE r.name = 'User';
+        </sql>
+    </changeSet>
+
+    <changeSet id="4" author="Ivan Zhendorenko">
+        <insert tableName="permission">
+            <column name="entity_name" value="COMMENT"/>
+            <column name="access_level" value="OWN_W"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="5" author="Ivan Zhendorenko">
+        <sql>
+            INSERT INTO role_permission (role_id, permission_id)
+            SELECT r.id, p.id
+            FROM role r
+                     JOIN permission p ON p.entity_name = 'COMMENT' AND p.access_level = 'OWN_W'
+            WHERE r.name = 'User';
+        </sql>
+    </changeSet>
+
+</databaseChangeLog>

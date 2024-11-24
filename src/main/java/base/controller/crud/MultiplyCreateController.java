@@ -1,7 +1,7 @@
 package base.controller.crud;
 
 import base.controller.abstractions.BaseController;
-import base.service.CrudService;
+import base.service.CreateService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import jakarta.validation.Valid;
@@ -24,8 +24,9 @@ public interface MultiplyCreateController<D, E, I> extends BaseController<D, E> 
    *
    * @return Сервис
    */
-  @Override
-  CrudService<D, ? extends E, I> svc();
+  default CreateService<D, ? extends E, I> svcCreate() {
+    return (CreateService<D, ? extends E, I>) svc();
+  }
 
   @Operation(summary = "Сохранение коллекции",
       description = "Сохранение коллекции сущностей",
@@ -37,6 +38,6 @@ public interface MultiplyCreateController<D, E, I> extends BaseController<D, E> 
   @PreAuthorize("hasPermission(#dummy, 'ALL_W') or hasPermission(#dummy, 'ADM')")
   @PostMapping("/save-all")
   default List<D> saveAll(@RequestBody @Valid Collection<D> dtos, @Parameter(hidden = true) E dummy) {
-    return svc().saveAllDto(dtos);
+    return svcCreate().saveAllDto(dtos);
   }
 }

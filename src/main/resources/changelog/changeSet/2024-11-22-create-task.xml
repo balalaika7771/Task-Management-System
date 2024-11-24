@@ -1,0 +1,70 @@
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <changeSet id="2024-11-22-create-tasks-table" author="Ivan Zhendorenko">
+        <createTable tableName="tasks">
+            <column name="id" type="BIGSERIAL">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="title" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="body" type="TEXT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="executor_id" type="BIGINT">
+                <constraints nullable="true"/>
+            </column>
+            <column name="status" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="priority" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addForeignKeyConstraint baseTableName="tasks"
+                                 baseColumnNames="executor_id"
+                                 referencedTableName="app_user"
+                                 referencedColumnNames="id"
+                                 constraintName="fk_tasks_executor_id_users_id"/>
+    </changeSet>
+
+    <changeSet id="2" author="Ivan Zhendorenko">
+        <insert tableName="permission">
+            <column name="entity_name" value="TASK"/>
+            <column name="access_level" value="ADM"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="3" author="Ivan Zhendorenko">
+        <sql>
+            INSERT INTO role_permission (role_id, permission_id)
+            SELECT r.id, p.id
+            FROM role r
+                     JOIN permission p ON p.entity_name = 'TASK' AND p.access_level = 'ADM'
+            WHERE r.name = 'admin';
+        </sql>
+    </changeSet>
+
+    <changeSet id="4" author="Ivan Zhendorenko">
+        <insert tableName="permission">
+            <column name="entity_name" value="TASK"/>
+            <column name="access_level" value="OWN_R"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="5" author="Ivan Zhendorenko">
+        <sql>
+            INSERT INTO role_permission (role_id, permission_id)
+            SELECT r.id, p.id
+            FROM role r
+                     JOIN permission p ON p.entity_name = 'TASK' AND p.access_level = 'OWN_R'
+            WHERE r.name = 'User';
+        </sql>
+    </changeSet>
+
+</databaseChangeLog>

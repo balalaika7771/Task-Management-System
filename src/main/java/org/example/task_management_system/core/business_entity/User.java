@@ -19,4 +19,5 @@ public class User extends Identifiable<User> {
   private String username;
 
   private String email;
+
 }

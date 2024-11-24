@@ -2,7 +2,7 @@ package org.example.task_management_system.security.transformer;
 
 import base.transformer.Transformer;
 import org.example.task_management_system.core.dto.UserDto;
-import org.example.task_management_system.security.entity.UserForAuth;
+import org.example.task_management_system.security.business_entity.UserForAuth;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 

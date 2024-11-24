@@ -14,7 +14,7 @@ import org.example.task_management_system.core.exception.EmailExistsException;
 import org.example.task_management_system.core.exception.InvalidCredentialsException;
 import org.example.task_management_system.core.exception.NameExistsException;
 import org.example.task_management_system.core.service_model.UserEntityService;
-import org.example.task_management_system.security.entity.UserForAuth;
+import org.example.task_management_system.security.business_entity.UserForAuth;
 import org.example.task_management_system.security.service_model.RoleEntityService;
 import org.example.task_management_system.security.transformer.UserForAuthTransformer;
 import org.springframework.security.core.userdetails.UserDetails;

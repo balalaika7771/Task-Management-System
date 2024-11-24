@@ -19,4 +19,8 @@ public class EntityNames {
 
   public static final String ROLE = "Role";
 
+  public static final String TASK = "Task";
+
+  public static final String COMMENT = "Comment";
+
 }

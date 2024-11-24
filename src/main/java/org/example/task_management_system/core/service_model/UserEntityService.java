@@ -2,7 +2,10 @@ package org.example.task_management_system.core.service_model;
 
 import base.constants.entity.EntityName;
 import base.repository.JpaSpecificationExecutorRepository;
-import base.service.CrudService;
+import base.service.CreateService;
+import base.service.DeleteService;
+import base.service.ReadService;
+import base.service.UpdateService;
 import base.transformer.Transformer;
 import java.util.HashSet;
 import java.util.Optional;
@@ -21,7 +24,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @AllArgsConstructor
-public class UserEntityService implements CrudService<UserDto, UserEntity, Long> {
+public class UserEntityService implements
+    CreateService<UserDto, UserEntity, Long>,
+    ReadService<UserDto, UserEntity, Long>,
+    UpdateService<UserDto, UserEntity, Long>,
+    DeleteService<UserDto, UserEntity, Long> {
 
   private final UserRepository userRepository;
 

@@ -1,7 +1,10 @@
 package org.example.task_management_system.core.controller;
 
-import base.controller.crud.CrudController;
-import base.service.CrudService;
+import base.controller.crud.CreateController;
+import base.controller.crud.DeleteController;
+import base.controller.crud.ReadController;
+import base.controller.crud.UpdateController;
+import base.service.abstractions.BaseService;
 import lombok.AllArgsConstructor;
 import org.example.task_management_system.core.business_entity.User;
 import org.example.task_management_system.core.dto.UserDto;
@@ -16,12 +19,16 @@ import static base.constants.entity.EntityNames.USER;
 @AllArgsConstructor
 @RestController
 @RequestMapping("api/" + USER)
-public class UserController implements CrudController<UserDto, User, Long> {
+public class UserController implements
+    CreateController<UserDto, User, Long>,
+    ReadController<UserDto, User, Long>,
+    UpdateController<UserDto, User, Long>,
+    DeleteController<UserDto, User, Long> {
 
   private final UserEntityService userEntityService;
 
   @Override
-  public CrudService<UserDto, UserEntity, Long> svc() {
+  public BaseService<UserDto, UserEntity> svc() {
     return userEntityService;
   }
 

@@ -11,7 +11,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import org.example.task_management_system.core.dto.UserDto;
 import org.example.task_management_system.core.exception.EntityNotFoundException;
-import org.example.task_management_system.security.entity.UserForAuth;
+import org.example.task_management_system.security.business_entity.UserForAuth;
 import org.example.task_management_system.security.request.AuthRequest;
 import org.example.task_management_system.security.request.RegisterRequest;
 import org.example.task_management_system.security.response.AuthResponse;
