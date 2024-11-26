@@ -29,7 +29,7 @@ class AuthControllerTest {
 
   @Container
   private static final PostgreSQLContainer<?> postgresContainer =
-      new PostgreSQLContainer<>("postgres:14.2")
+      new PostgreSQLContainer<>("postgres:15")
           .withDatabaseName("testdb")
           .withUsername("user")
           .withPassword("password");

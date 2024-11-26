@@ -3,6 +3,7 @@ package org.example.task_management_system.task_management.service;
 import base.service.abstractions.BaseService;
 import base.service.crudown.ReadOwnService;
 import base.util.Data;
+import java.util.Objects;
 import lombok.AllArgsConstructor;
 import lombok.experimental.ExtensionMethod;
 import org.example.task_management_system.task_management.dto.TaskDto;
@@ -29,7 +30,9 @@ public class TaskOwnService implements ReadOwnService<TaskDto, TaskEntity, Long>
   public void checkTaskAccess(Long taskId, Long currentUserId) {
     boolean hasAccess = taskEntityService
         .findByIdDto(taskId)
-        .filter(task -> task.getExecutorId().equals(currentUserId))
+        .map(TaskDto::getExecutorId)
+        .filter(Objects::nonNull)
+        .filter(task -> task.equals(currentUserId))
         .isPresent();
     if (!hasAccess) {
       throw new SecurityException("Access denied to task with ID: " + taskId);

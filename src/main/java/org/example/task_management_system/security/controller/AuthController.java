@@ -24,6 +24,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 
+/**
+ * Контроллер для обработки запросов, связанных с аутентификацией и авторизацией пользователей.
+ * Предоставляет методы для регистрации, авторизации и получения информации о текущем пользователе.
+ *
+ * @author Ivan Zhendorenko
+ */
 @RestController
 @RequestMapping("/api/auth")
 @AllArgsConstructor
@@ -32,6 +38,12 @@ public class AuthController implements BaseController<UserDto, UserForAuth> {
 
   private final UserAuthService userAuthService;
 
+  /**
+   * Регистрация нового пользователя.
+   *
+   * @param authRequest данные для регистрации пользователя.
+   * @return объект {@link AuthResponse} с JWT-токеном и именем пользователя.
+   */
   @Operation(summary = "Регистрация пользователя", description = "Создает нового пользователя с уникальным именем и возвращает JWT-токен.")
   @ApiResponses(value = {
       @ApiResponse(responseCode = "200", description = "Пользователь успешно зарегистрирован, возвращен JWT-токен"),
@@ -44,6 +56,12 @@ public class AuthController implements BaseController<UserDto, UserForAuth> {
     return new AuthResponse(userAuthService.register(authRequest.toUserDto()), authRequest.username());
   }
 
+  /**
+   * Авторизация пользователя.
+   *
+   * @param authRequest учетные данные для входа.
+   * @return объект {@link AuthResponse} с JWT-токеном и именем пользователя.
+   */
   @Operation(summary = "Авторизация пользователя", description = "Авторизует пользователя и возвращает JWT-токен для последующего доступа.")
   @ApiResponses(value = {
       @ApiResponse(responseCode = "200", description = "Успешная авторизация, возвращен JWT-токен"),
@@ -56,6 +74,12 @@ public class AuthController implements BaseController<UserDto, UserForAuth> {
     return new AuthResponse(userAuthService.login(authRequest.toUserDto()), authRequest.usernameOrEmail());
   }
 
+  /**
+   * Получение информации о текущем авторизованном пользователе.
+   *
+   * @param authentication объект {@link Authentication}, содержащий данные о текущем пользователе.
+   * @return объект {@link UserDto} с информацией о текущем пользователе.
+   */
   @Operation(summary = "Получение информации о текущем пользователе", description = "Возвращает данные текущего авторизованного пользователя.")
   @ApiResponses(value = {
       @ApiResponse(responseCode = "200", description = "Информация о пользователе возвращена"),
@@ -68,9 +92,13 @@ public class AuthController implements BaseController<UserDto, UserForAuth> {
         .orElseThrow(() -> new EntityNotFoundException(EntityName.USER));
   }
 
+  /**
+   * Предоставляет сервис для работы с аутентификацией и авторизацией.
+   *
+   * @return объект {@link UserAuthService}.
+   */
   @Override
   public BaseService<UserDto, UserForAuth> svc() {
     return userAuthService;
   }
 }
-

@@ -38,9 +38,6 @@ public class SecurityConfig {
             .requestMatchers("/api/oauth/*").permitAll()
             .requestMatchers("/v3/api-docs/**").permitAll()// Разрешаем доступ к эндпоинтам авторизации
             .anyRequest().authenticated() // Остальные запросы требуют авторизации
-        )
-        .exceptionHandling(exceptionHandling ->
-            exceptionHandling.authenticationEntryPoint(customAuthenticationEntryPoint) // Указываем кастомный AuthenticationEntryPoint
         );
 
     http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);

@@ -13,25 +13,40 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 
 /**
- * Контроллер с Update-операциями
+ * Контроллер с Update-операциями для сущностей, связанных с текущим пользователем.
  *
+ * @param <D> Тип DTO
+ * @param <E> Тип сущности
+ * @param <I> Тип идентификатора
  * @author Ivan Zhendorenko
  */
 public interface UpdateOwnController<D extends IdentifiableDto<D>, E, I> extends BaseOwnController<D, E> {
 
   /**
-   * Сервис, используемый контроллером
+   * Возвращает сервис для выполнения операций обновления собственных сущностей.
    *
-   * @return Сервис
+   * @return Сервис обновления
    */
   default UpdateOwnService<D, ? extends E, I> svcOwnUpdate() {
     return (UpdateOwnService<D, ? extends E, I>) svcOwn();
   }
 
-  @Operation(summary = "Обновление",
-      description = "Обновление сущности",
+  /**
+   * Обновление сущности, связанной с текущим пользователем.
+   *
+   * @param dto   DTO обновляемой сущности
+   * @param dummy Заглушка для проверки прав доступа
+   * @return Обновленная сущность в виде DTO
+   */
+  @Operation(summary = "Обновление собственной сущности",
+      description = """
+              Выполняет обновление существующей сущности, связанной с текущим пользователем.
+                                  
+              Операция доступна для пользователей с правами 'OWN_W' или 'ADM'. 
+              Перед обновлением выполняется валидация входного DTO.
+          """,
       requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(
-          description = "Обновляемая сущность",
+          description = "DTO обновляемой сущности. Обязательные поля должны быть заполнены.",
           required = true
       )
   )
@@ -39,6 +54,7 @@ public interface UpdateOwnController<D extends IdentifiableDto<D>, E, I> extends
   @PatchMapping("/update-own")
   default D updateOwn(@RequestBody @Valid D dto, @Parameter(hidden = true) E dummy) {
     return svcOwnUpdate().updateDto(dto, e -> {
+      // Место для пользовательской логики изменения сущности перед обновлением
     }, Auth.getCurrentUserId());
   }
 }

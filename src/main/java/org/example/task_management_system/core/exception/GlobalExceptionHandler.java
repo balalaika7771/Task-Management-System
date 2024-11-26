@@ -22,15 +22,21 @@ public class GlobalExceptionHandler {
   }
 
   @ExceptionHandler(NameExistsException.class)
-  public ResponseEntity<SimpleErrorResponse> handleEntityNotFoundException(NameExistsException ex) {
+  public ResponseEntity<SimpleErrorResponse> handleEntityNameExistsException(NameExistsException ex) {
     SimpleErrorResponse errorResponse = new SimpleErrorResponse(ex.getMessage());
     return new ResponseEntity<>(errorResponse, HttpStatus.CONFLICT);
   }
 
   @ExceptionHandler(EmailExistsException.class)
-  public ResponseEntity<SimpleErrorResponse> handleEntityNotFoundException(EmailExistsException ex) {
+  public ResponseEntity<SimpleErrorResponse> handleEntityEmailExistsException(EmailExistsException ex) {
     SimpleErrorResponse errorResponse = new SimpleErrorResponse(ex.getMessage());
     return new ResponseEntity<>(errorResponse, HttpStatus.CONFLICT);
+  }
+
+  @ExceptionHandler(SecurityException.class)
+  public ResponseEntity<SimpleErrorResponse> handleEntitySecurityException(SecurityException ex) {
+    SimpleErrorResponse errorResponse = new SimpleErrorResponse(ex.getMessage());
+    return new ResponseEntity<>(errorResponse, HttpStatus.LOCKED);
   }
 
 }

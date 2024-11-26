@@ -18,4 +18,5 @@ public enum TaskStatus {
   CANCELED("Отменено");       // Задача отменена
 
   private final String description;
+
 }

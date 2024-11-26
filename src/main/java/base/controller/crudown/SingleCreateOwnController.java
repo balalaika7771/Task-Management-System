@@ -12,25 +12,40 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 
 /**
- * Контроллер с одиночной create-операцией
+ * Контроллер для выполнения одиночной операции сохранения сущности с проверкой прав доступа текущего пользователя.
  *
+ * @param <D> Тип DTO
+ * @param <E> Тип сущности
+ * @param <I> Тип идентификатора
  * @author Ivan Zhendorenko
  */
 public interface SingleCreateOwnController<D, E, I> extends BaseOwnController<D, E> {
 
   /**
-   * Сервис, используемый контроллером
+   * Возвращает сервис для выполнения операции создания с учетом прав текущего пользователя.
    *
-   * @return Сервис
+   * @return Сервис для создания
    */
   default CreateOwnService<D, ? extends E, I> svcOwnCreate() {
     return (CreateOwnService<D, ? extends E, I>) svcOwn();
   }
 
-  @Operation(summary = "Сохранение",
-      description = "Сохранение сущности",
+  /**
+   * Выполняет операцию сохранения сущности с учетом прав доступа текущего пользователя.
+   *
+   * @param dto   DTO сохраняемой сущности
+   * @param dummy Заглушка для проверки прав доступа
+   * @return Сохраненная сущность в виде DTO
+   */
+  @Operation(summary = "Сохранение сущности текущим пользователем",
+      description = """
+              Сохраняет новую сущность в базе данных с учетом прав текущего пользователя.
+                                  
+              Перед сохранением осуществляется проверка прав доступа и валидация DTO. 
+              Доступно для пользователей с правами 'OWN_W' или 'ADM'.
+          """,
       requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(
-          description = "Сохраняемая сущность",
+          description = "DTO сохраняемой сущности. Все обязательные поля должны быть заполнены.",
           required = true
       )
   )
